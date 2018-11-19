@@ -31,22 +31,6 @@ chrome.browserAction.onClicked.addListener(function() {
 //       actions: [new chrome.declarativeContent.ShowPageAction()]
 //     }]);
 //   });
-//
-//   chrome.webRequest.onCompleted.addListener(
-//     function(details){
-//       console.log(details)
-//     },
-//     {urls: ["https://www.youtube.com/*"]},
-//     ["responseHeaders"]
-//   );
-//
-//   chrome.webRequest.onHeadersReceived.addListener(
-//     function(details){
-//       console.log(details)
-//     },
-//     {urls: ["https://www.youtube.com/*"]},
-//     ["responseHeaders"]
-//   );
 // });
 
 

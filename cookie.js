@@ -30,9 +30,13 @@ chrome.webRequest.onHeadersReceived.addListener(
 function processRequest(request){
   request.requestHeaders.forEach(function(element){
     if(element.name.toLowerCase() === "cookie"){
+      let cookies = element.value.trim().split(";");
       console.log(request);
       console.log('[Requst] cookie = ' + element.value);
-      validateCookie(request);
+
+      for (let i = 0; i < cookies.length; i++){
+        validateCookie(cookies[i].trim(), request)
+      }
     }
   })
 }
@@ -50,11 +54,16 @@ function processResponse(response){
 function saveCookie(cookieInfo, response){
   let record = new CookieRecord(cookieInfo, response);
   record.saveRecord();
-
-  record.getRecord(record.id);  //Test
 }
 
-function validateCookie(request){
+function validateCookie(cookieId, request){
+  let record = CookieRecord.getRecord(cookieId);
+  if (record){
+    console.log("cookie record is found: ", record)
+  } else{
+    console.log("cookie record is not found: ", cookieId)
+  }
+
   //TODO: Policies
 }
 
@@ -124,24 +133,11 @@ class CookieRecord{
   }
 
   saveRecord() {
-    // TODO
-    let key = this.id;
-    let content = {
-      "name": this.name,
-      "value": this.value,
-      "protocol": this.protocol
-    };
-
-    chrome.storage.local.set({key: JSON.stringify(content)}, function () {
-      console.log('Record is saved:', JSON.stringify(content));
-    });
+    localStorage.setItem(this.id, JSON.stringify(this));
   }
 
-  getRecord(key){
-    // TODO: can't use variable as key???
-    chrome.storage.local.get(['key'], function(result) {
-      console.log('Value currently is ' + result.key);
-    });
+  static getRecord(key){
+    return JSON.parse(localStorage.getItem(key));
   }
 }
 

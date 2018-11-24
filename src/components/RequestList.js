@@ -36,6 +36,7 @@ class RequestList extends React.Component {
 		chrome.webRequest.onHeadersReceived.addListener(
 			function(details){
 				// console.log(JSON.stringify(details));
+				console.log(details);
 				cookieStore.processResponse(details);
 			},
 			{

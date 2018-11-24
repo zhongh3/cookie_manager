@@ -8,9 +8,14 @@ describe("test example", () => {
 	})
 	
 	it("test rawCookieText to obj", () => {
-		let obj = convertCookieStrToObj("policy1-cookie=cookie1;expires=100;path=/")
-		assert.equal("cookie1", obj["policy1-cookie"])
-		assert.equal("100", obj["expires"])
+		let obj = convertCookieStrToObj(
+			"SIDCC=ABtHo-FCTr6gs1_0uL50MW2q8yuJ6FsHTOrnTpXAyRSsSdqUJ41IiGZBLHCpbj8IPbdNYjaTJiNP; " +
+			"expires=Fri, 22-Feb-2019 11:51:12 GMT; path=/; " +
+			"domain=.google.com; priority=high")
+		assert.equal("FCTr6gs1_0uL50MW2q8yuJ6FsHTOrnTpXAyRSsSdqUJ41IiGZBLHCpbj8IPbdNYjaTJiNP", obj["SIDCC"])
+		assert.equal("Fri, 22-Feb-2019 11:51:12 GMT", obj["expires"])
 		assert.equal("/", obj["path"])
+		assert.equal(".google.com", obj["domain"])
+		assert.equal("high", obj["priority"])
 	})
 })

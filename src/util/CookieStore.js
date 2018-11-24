@@ -50,10 +50,12 @@ class CookieStore {
 	
 	processResponse(response){
 		let self = this
+		console.log(response);
 		response.responseHeaders.forEach(element => {
 			if(element.name.toLowerCase() === "set-cookie"){
 				console.log('[Response] set-cookie = ' + element.value);
 				let cookieObj = self.extractCookie(element.value, response);
+				console.log(cookieObj)
 				self.save(cookieObj)
 			}
 		})

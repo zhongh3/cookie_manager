@@ -18,6 +18,8 @@ const policy = (state = initialState, action) => {
 			return {...state, policy3On: !state.policy3On}
 		case TOGGLE_POLICY4:
 			return {...state, policy4On: !state.policy4On}
+		default:
+			return state
 	}
 }
 

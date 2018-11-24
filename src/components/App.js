@@ -1,5 +1,8 @@
 import React from 'react'
 import RequestList from './RequestList'
+import { connect } from 'react-redux'
+import * as actions from "../actions/toggle-policy-actions"
+
 import {AppBar, Toolbar, Typography,
 	Switch, FormGroup, FormControlLabel, withStyles} from '@material-ui/core';
 
@@ -21,9 +24,8 @@ const App = (props) => (
 					<FormControlLabel
 						control={
 							<Switch
-								// checked={this.state.checkedA}
-								// onChange={this.handleChange('checkedA')}
-								value="checkedA"
+								checked={props.policy1On}
+								onChange={props.togglePolicy1}
 							/>
 						}
 						label={<span style={{color: "white"}}>Policy 1</span>}
@@ -31,9 +33,8 @@ const App = (props) => (
 					<FormControlLabel
 						control={
 							<Switch
-								// checked={this.state.checkedA}
-								// onChange={this.handleChange('checkedA')}
-								value="checkedA"
+								checked={props.policy2On}
+								onChange={props.togglePolicy2}
 							/>
 						}
 						label={<span style={{color: "white"}}>Policy 2</span>}
@@ -41,9 +42,8 @@ const App = (props) => (
 					<FormControlLabel
 						control={
 							<Switch
-								// checked={this.state.checkedA}
-								// onChange={this.handleChange('checkedA')}
-								value="checkedA"
+								checked={props.policy3On}
+								onChange={props.togglePolicy3}
 							/>
 						}
 						label={<span style={{color: "white"}}>Policy 3</span>}
@@ -51,9 +51,8 @@ const App = (props) => (
 					<FormControlLabel
 						control={
 							<Switch
-								// checked={this.state.checkedA}
-								// onChange={this.handleChange('checkedA')}
-								value="checkedA"
+								checked={props.policy4On}
+								onChange={props.togglePolicy4}
 							/>
 						}
 						label={<span style={{color: "white"}}>Policy 4</span>}
@@ -73,4 +72,12 @@ const App = (props) => (
 	</div>
 )
 
-export default withStyles(styles)(App)
+const mapStateToProps = state => ({
+	policy1On: state.policy.policy1On,
+	policy2On: state.policy.policy2On,
+	policy3On: state.policy.policy3On,
+	policy4On: state.policy.policy4On
+})
+
+
+export default connect(mapStateToProps, actions)(withStyles(styles)(App))

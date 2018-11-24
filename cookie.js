@@ -18,7 +18,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 
 chrome.webRequest.onHeadersReceived.addListener(
   function(details){
-    console.log(JSON.stringify(details));
+    // console.log(JSON.stringify(details));
     processResponse(details);
   },
   {

@@ -1,10 +1,14 @@
 chrome.webRequest.onBeforeSendHeaders.addListener(
   function(details){
-//     console.log(details);
+    // console.log(JSON.stringify(details));
     processRequest(details);
   },
   {
-    urls: ["http://karlie.000webhostapp.com/*", "https://connect.facebook.net/*", "https://www.facebook.com/*"],
+    urls: ["http://karlie.000webhostapp.com/*",
+      "https://connect.facebook.net/*",
+      "https://www.facebook.com/*",
+	    "http://*/*"
+    ],
     // urls: ["<all_urls>"],
     types: ["main_frame", "sub_frame", "stylesheet", "script", "image",
       "font", "object", "xmlhttprequest", "media", "other"]
@@ -14,11 +18,13 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 
 chrome.webRequest.onHeadersReceived.addListener(
   function(details){
-//     console.log(details);
+    console.log(JSON.stringify(details));
     processResponse(details);
   },
   {
-    urls: ["http://karlie.000webhostapp.com/*", "https://connect.facebook.net/*", "https://www.facebook.com/*"],
+    urls: ["http://karlie.000webhostapp.com/*",
+      "https://connect.facebook.net/*",
+      "https://www.facebook.com/*"],
     // urls: ["<all_urls>"],
     types: ["main_frame", "sub_frame", "stylesheet", "script", "image",
       "font", "object", "xmlhttprequest", "media", "other"]

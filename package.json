@@ -19,6 +19,7 @@
   "homepage": "https://github.com/zhongh3/cookie_manager#readme",
   "dependencies": {
     "@material-ui/core": "^3.5.1",
+    "js-sha256": "^0.9.0",
     "path": "^0.12.7",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

@@ -1,5 +1,3 @@
-import requestHistory from './util/request-history'
-
 chrome.webRequest.onHeadersReceived.addListener(
 	function(details){
 		console.log(JSON.stringify(details));

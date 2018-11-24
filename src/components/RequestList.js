@@ -1,6 +1,7 @@
 import {List, ListItem, ListItemText} from '@material-ui/core';
 import React from "react"
 import { connect } from 'react-redux'
+import cookieStore from "../util/CookieStore"
 
 class RequestList extends React.Component {
 	constructor(props){
@@ -35,7 +36,7 @@ class RequestList extends React.Component {
 		chrome.webRequest.onHeadersReceived.addListener(
 			function(details){
 				// console.log(JSON.stringify(details));
-				// processResponse(details);
+				cookieStore.processResponse(details);
 			},
 			{
 				urls: ["http://karlie.000webhostapp.com/*",

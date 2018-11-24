@@ -1,4 +1,4 @@
-import {ProtoEnum} from "./constants"
+import {ProtoEnum} from "../constants"
 
 export function parseURL(n) {
 	let t = {};

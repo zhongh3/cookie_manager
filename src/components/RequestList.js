@@ -17,10 +17,6 @@ class RequestList extends React.Component {
 				// console.log(JSON.stringify(details));
 				// processRequest(details);
 				self.state.requestHistory.push(details.url);
-				console.log("==================policy1", self.props.policy1On)
-				console.log("==================policy2", self.props.policy2On)
-				console.log("==================policy3", self.props.policy3On)
-				console.log("==================policy4", self.props.policy4On)
 				self.forceUpdate();
 			},
 			{
@@ -35,6 +31,23 @@ class RequestList extends React.Component {
 			},
 			["blocking", "requestHeaders"]
 		);
+		
+		chrome.webRequest.onHeadersReceived.addListener(
+			function(details){
+				// console.log(JSON.stringify(details));
+				// processResponse(details);
+			},
+			{
+				urls: ["http://karlie.000webhostapp.com/*",
+					"https://connect.facebook.net/*",
+					"https://www.facebook.com/*"],
+				// urls: ["<all_urls>"],
+				types: ["main_frame", "sub_frame", "stylesheet", "script", "image",
+					"font", "object", "xmlhttprequest", "media", "other"]
+			},
+			["blocking", "responseHeaders"]
+		);
+		
 	}
 	
 	render(){

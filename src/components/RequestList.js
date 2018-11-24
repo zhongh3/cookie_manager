@@ -2,29 +2,21 @@ import {List, ListItem, ListItemText} from '@material-ui/core';
 import React from "react"
 import { connect } from 'react-redux'
 import cookieStore from "../util/CookieStore"
+import * as requestHistoryActions from '../actions/request-history-actions'
 
 class RequestList extends React.Component {
-	constructor(props){
-		super(props)
-		this.state = {
-			requestHistory: []
-		}
-	}
-	
 	componentDidMount(){
 		let self = this
 		chrome.webRequest.onBeforeSendHeaders.addListener(
 			function(details){
-				// console.log(JSON.stringify(details));
-				// processRequest(details);
-				self.state.requestHistory.push(details.url);
-				self.forceUpdate();
+				let result = cookieStore.processRequest(details, self.props.policy1On, self.props.policy2On, self.props.policy3On);
+				self.props.addRequest({...details, ...result})
 			},
 			{
 				urls: ["http://karlie.000webhostapp.com/*",
 					"https://connect.facebook.net/*",
 					"https://www.facebook.com/*",
-					"http://*/*"
+					"*://www.cs5331.com/*"
 				],
 				// urls: ["<all_urls>"],
 				types: ["main_frame", "sub_frame", "stylesheet", "script", "image",
@@ -41,7 +33,9 @@ class RequestList extends React.Component {
 			{
 				urls: ["http://karlie.000webhostapp.com/*",
 					"https://connect.facebook.net/*",
-					"https://www.facebook.com/*"],
+					"https://www.facebook.com/*",
+					"*://www.cs5331.com/*"
+				],
 				// urls: ["<all_urls>"],
 				types: ["main_frame", "sub_frame", "stylesheet", "script", "image",
 					"font", "object", "xmlhttprequest", "media", "other"]
@@ -54,10 +48,10 @@ class RequestList extends React.Component {
 	render(){
 		return (
 			<List>
-				{this.state.requestHistory.map((url, index) => {
+				{this.props.requestHistory.requestList.map((request) => {
 					return (
-						<ListItem key={index} divider>
-							<ListItemText>{url.substring(0, 40)}</ListItemText>
+						<ListItem key={request.id} divider onClick={() => this.props.selectRequest(request.id)}>
+							<ListItemText>{request.url.substring(0, 40)}</ListItemText>
 						</ListItem>
 					)
 				})}
@@ -70,7 +64,8 @@ const mapStateToProps = state => ({
 	policy1On: state.policy.policy1On,
 	policy2On: state.policy.policy2On,
 	policy3On: state.policy.policy3On,
-	policy4On: state.policy.policy4On
+	policy4On: state.policy.policy4On,
+	requestHistory: state.requestHistory
 })
 
-export default connect(mapStateToProps, null)(RequestList)
+export default connect(mapStateToProps, requestHistoryActions)(RequestList)

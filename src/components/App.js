@@ -66,7 +66,8 @@ const App = (props) => (
 				<RequestList/>
 			</div>
 			<div style={{width: "70%", border: "1px solid rgba(0, 0, 0, 0.12)"}}>
-				test
+				<p>Before: {props.selectedRequest.beforeCookie}</p>
+				<p>After: {props.selectedRequest.afterCookie}</p>
 			</div>
 		</div>
 	</div>
@@ -76,7 +77,8 @@ const mapStateToProps = state => ({
 	policy1On: state.policy.policy1On,
 	policy2On: state.policy.policy2On,
 	policy3On: state.policy.policy3On,
-	policy4On: state.policy.policy4On
+	policy4On: state.policy.policy4On,
+	selectedRequest: state.requestHistory.selectedRequest
 })
 
 

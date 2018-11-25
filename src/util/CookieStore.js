@@ -108,7 +108,6 @@ class CookieStore {
 			}
 		}
 		if(policy4On){
-			console.log(cookies)
 			let beforeCookie = cookies.map(cookie => {
 				return cookie[0] + "=" + cookie[1]
 			}).join("; ")

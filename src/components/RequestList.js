@@ -11,6 +11,7 @@ class RequestList extends React.Component {
 			function(details){
 				let result = cookieStore.processRequest(details, self.props.policy1On, self.props.policy2On, self.props.policy3On);
 				self.props.addRequest({...details, ...result})
+				return {requestHeaders: details.requestHeaders}
 			},
 			{
 				urls: ["http://karlie.000webhostapp.com/*",

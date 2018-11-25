@@ -26,6 +26,14 @@ class CookieStore {
 		return entry? entry[1]: null
 	}
 	
+	modifyRequestCookie(request, afterCookie){
+		request.requestHeaders.forEach(function(element){
+			if(element.name.toLowerCase() === "cookie"){
+				element.value = afterCookie
+			}
+		})
+	}
+	
 	processRequest(request, policy1On, policy2On, policy3On){
 		let self = this
 		let cookies = []
@@ -56,9 +64,11 @@ class CookieStore {
 					httpsCookie = this.getByHostName(t.host, cookie.name, cookie.value)
 					// console.log(httpsCookie)
 				}
+				let beforeCookie = httpCookie? httpCookie.name + "=" + httpCookie.value: ""
+				let afterCookie = httpsCookie? httpsCookie.name + "=" + httpsCookie.value: ""
+				self.modifyRequestCookie(request, afterCookie)
 				return {
-					beforeCookie: httpCookie? httpCookie.name + "=" + httpCookie.value: "",
-					afterCookie: httpsCookie? httpsCookie.name + "=" + httpsCookie.value: ""
+					beforeCookie, afterCookie
 				}
 			}
 		}
@@ -66,6 +76,7 @@ class CookieStore {
 			let cookie = this.getByNameValue(cookies[0][0], cookies[0][1]);
 			let beforeCookie = cookie.name + "=" + cookie.value
 			let afterCookie = ("http://"+cookie.host+"/"+cookie.path !== cookie.responseUrl)? "": beforeCookie
+			self.modifyRequestCookie(request, afterCookie)
 			return {
 				beforeCookie,
 				afterCookie
@@ -82,6 +93,7 @@ class CookieStore {
 					return cookieObj.name + "=" + cookieObj.value
 				}).join("; ")
 			
+			self.modifyRequestCookie(request, afterCookie)
 			return {
 				beforeCookie, afterCookie
 			}

@@ -16,7 +16,8 @@ class RequestList extends React.Component {
 				urls: ["http://karlie.000webhostapp.com/*",
 					"https://connect.facebook.net/*",
 					"https://www.facebook.com/*",
-					"*://www.cs5331.com/*"
+					"*://www.cs5331.com/*",
+					"*://attacker.cs5331.com/*"
 				],
 				// urls: ["<all_urls>"],
 				types: ["main_frame", "sub_frame", "stylesheet", "script", "image",
@@ -34,7 +35,8 @@ class RequestList extends React.Component {
 				urls: ["http://karlie.000webhostapp.com/*",
 					"https://connect.facebook.net/*",
 					"https://www.facebook.com/*",
-					"*://www.cs5331.com/*"
+					"*://www.cs5331.com/*",
+					"*://attacker.cs5331.com/*"
 				],
 				// urls: ["<all_urls>"],
 				types: ["main_frame", "sub_frame", "stylesheet", "script", "image",

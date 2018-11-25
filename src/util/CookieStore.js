@@ -27,16 +27,17 @@ class CookieStore {
 	}
 	
 	processRequest(request, policy1On, policy2On, policy3On){
+		let self = this
 		let cookies = []
 		let t = parseURL(request.url)
 		request.requestHeaders.forEach(function(element){
 			if(element.name.toLowerCase() === "cookie"){
-				let cookie = element.value.trim().split(";")[0];
 				console.log(request);
-				// console.log('[Requst] cookie = ' + element.value);
-				let name = cookie.split("=")[0].trim()
-				let value = cookie.split("=")[1].trim()
-				cookies.push([name, value])
+				cookies = element.value.trim().split(";").map(cookieStr => {
+					let name = cookieStr.split("=")[0].trim()
+					let value = cookieStr.split("=")[1].trim()
+					return [name, value]
+				});
 			}
 		})
 		if(cookies.length === 0)
@@ -70,7 +71,21 @@ class CookieStore {
 				afterCookie
 			}
 		}
-		
+		if(policy3On){
+			let beforeCookie = cookies.map(cookie => {
+				return cookie[0] + "=" + cookie[1]
+			}).join("; ")
+			
+			let afterCookie = cookies.map(cookie => self.getByNameValue(cookie[0], cookie[1]))
+				.filter(cookieObj => cookieObj && t.host === cookieObj.host)
+				.map(cookieObj => {
+					return cookieObj.name + "=" + cookieObj.value
+				}).join("; ")
+			
+			return {
+				beforeCookie, afterCookie
+			}
+		}
 	}
 	
 	processResponse(response){

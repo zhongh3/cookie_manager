@@ -9,7 +9,8 @@ class RequestList extends React.Component {
 		let self = this
 		chrome.webRequest.onBeforeSendHeaders.addListener(
 			function(details){
-				let result = cookieStore.processRequest(details, self.props.policy1On, self.props.policy2On, self.props.policy3On);
+				let result = cookieStore.processRequest(details, self.props.policy1On,
+					self.props.policy2On, self.props.policy3On, self.props.policy4On);
 				self.props.addRequest({...details, ...result})
 				return {requestHeaders: details.requestHeaders}
 			},

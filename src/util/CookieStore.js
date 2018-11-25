@@ -34,7 +34,7 @@ class CookieStore {
 		})
 	}
 	
-	processRequest(request, policy1On, policy2On, policy3On){
+	processRequest(request, policy1On, policy2On, policy3On, policy4On){
 		let self = this
 		let cookies = []
 		let t = parseURL(request.url)
@@ -52,11 +52,11 @@ class CookieStore {
 			return
 		
 		if(policy1On){
+			let cookie = this.getByNameValue(cookies[0][0], cookies[0][1]);
 			if(t.protocol === ProtoEnum.HTTPS){
 				// console.log(store)
 				// console.log(cookies)
 				// let key = cookies[0].join("");
-				let cookie = this.getByNameValue(cookies[0][0], cookies[0][1]);
 				let httpsCookie = null
 				let httpCookie = null
 				if(cookie && cookie.protocol === ProtoEnum.HTTP){ //if http, need to check whether https cookie exists or not
@@ -69,6 +69,15 @@ class CookieStore {
 				self.modifyRequestCookie(request, afterCookie)
 				return {
 					beforeCookie, afterCookie
+				}
+			}else{
+				if(cookie && cookie.protocol === ProtoEnum.HTTPS){
+					let beforeCookie = cookie.name + "=" + cookie.value
+					let afterCookie = ""
+					self.modifyRequestCookie(request, afterCookie)
+					return {
+						beforeCookie, afterCookie
+					}
 				}
 			}
 		}
@@ -98,6 +107,24 @@ class CookieStore {
 				beforeCookie, afterCookie
 			}
 		}
+		if(policy4On){
+			console.log(cookies)
+			let beforeCookie = cookies.map(cookie => {
+				return cookie[0] + "=" + cookie[1]
+			}).join("; ")
+			
+			let afterCookie = cookies.map(cookie => self.getByNameValue(cookie[0], cookie[1]))
+				.filter(cookieObj => !!cookieObj)
+				.map(cookieObj => {
+					return cookieObj.name + "=" + cookieObj.value
+				}).join("; ")
+			
+			self.modifyRequestCookie(request, afterCookie)
+			return {
+				beforeCookie, afterCookie
+			}
+		}
+		
 	}
 	
 	processResponse(response){

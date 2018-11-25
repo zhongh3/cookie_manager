@@ -39,12 +39,13 @@ class CookieStore {
 				cookies.push([name, value])
 			}
 		})
+		if(cookies.length === 0)
+			return
+		
 		if(policy1On){
 			if(t.protocol === ProtoEnum.HTTPS){
-				console.log(store)
-				console.log(cookies)
-				if(cookies.length === 0) //no cookie is there
-					return {}
+				// console.log(store)
+				// console.log(cookies)
 				// let key = cookies[0].join("");
 				let cookie = this.getByNameValue(cookies[0][0], cookies[0][1]);
 				let httpsCookie = null
@@ -52,7 +53,7 @@ class CookieStore {
 				if(cookie && cookie.protocol === ProtoEnum.HTTP){ //if http, need to check whether https cookie exists or not
 					httpCookie = cookie
 					httpsCookie = this.getByHostName(t.host, cookie.name, cookie.value)
-					console.log(httpsCookie)
+					// console.log(httpsCookie)
 				}
 				return {
 					beforeCookie: httpCookie? httpCookie.name + "=" + httpCookie.value: "",
@@ -60,6 +61,16 @@ class CookieStore {
 				}
 			}
 		}
+		if(policy2On){
+			let cookie = this.getByNameValue(cookies[0][0], cookies[0][1]);
+			let beforeCookie = cookie.name + "=" + cookie.value
+			let afterCookie = ("http://"+cookie.host+"/"+cookie.path !== cookie.responseUrl)? "": beforeCookie
+			return {
+				beforeCookie,
+				afterCookie
+			}
+		}
+		
 	}
 	
 	processResponse(response){
@@ -95,6 +106,7 @@ class CookieStore {
 		cookieObj.httpOnly = false;  // set-cookie
 		cookieObj.sameSite = false;  // set-cookie
 		cookieObj.isSession = true;  // set-cookie
+		cookieObj.responseUrl = response.url
 		
 		for (let i = 1; i < x.length; i++){
 			let para = x[i].trim().split("=");

@@ -1,4 +1,3 @@
-import sha256 from "js-sha256"
 import {parseURL} from "./util"
 import {ProtoEnum} from "../constants"
 

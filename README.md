@@ -1,11 +1,11 @@
-# Project Team: 
+# cookie_manager
+Policy-based Cookie Management Chrome Extension
+
+## Project Team Members: 
 Huang Shaohua (A0055852B)
 Kuang Hao (A0191488N)
 Zhong Hua (A0159321J)
 Zhong Xinyue (A0191376X)
-
-# cookie_manager
-Policy-based Cookie Management Chrome Extension
 
 In this Chrome extension, we implemented four policies that can be toggled by the user. 
 

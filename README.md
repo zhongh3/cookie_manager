@@ -7,7 +7,8 @@ Policy-based Cookie Management Chrome Extension
 - Zhong Hua (A0159321J)
 - Zhong Xinyue (A0191376X)
 
-In this Chrome extension, we implemented four policies that can be toggled by the user. 
+In this Chrome extension, we implemented four cookie policies that can be toggled by the user. 
+It provided user the flexibility to enhance the cookie management and prevent cookie related attacks. 
 
 - Policy 1: Isolate HTTP and HTTPS Cookies
 - Policy 2: Prevent Cookie Overwriting (path)
